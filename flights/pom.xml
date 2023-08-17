@@ -8,9 +8,10 @@
 		<version>3.1.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>com.fabrix</groupId>
 	<artifactId>flights</artifactId>
 	<version>1.0</version>
+	<packaging>jar</packaging>
 	<name>flights</name>
 	<description>Flights service</description>
 	<properties>
