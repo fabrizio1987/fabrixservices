@@ -8,11 +8,11 @@
 		<version>3.1.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>flights</artifactId>
+	<groupId>com.fabrix</groupId>
+	<artifactId>hotels</artifactId>
 	<version>1.0</version>
-	<name>flights</name>
-	<description>Flights service</description>
+	<name>hotels</name>
+	<description>Hotels service</description>
 	<properties>
 		<java.version>20</java.version>
 	</properties>
