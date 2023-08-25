@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+
+  flights:
+    image: fabrix1987/flights:latest
+    mem_limit: 700m
+    ports:
+      - "8080:8080"
+    networks:
+      - fabrix1987-network
+    
+  hotels:
+    image: fabrix1987/hotels:latest
+    mem_limit: 700m
+    ports:
+      - "8090:8090"
+    networks:
+      - fabrix1987-network
+    
+networks:
+  fabrix1987-network:
