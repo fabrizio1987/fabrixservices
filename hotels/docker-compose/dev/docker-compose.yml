@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+
+  configserver:
+    image: fabrix1987/configserver:latest
+    mem_limit: 700m
+    ports:
+      - "8071:8071"
+    networks:
+     - fabrix1987
+     
+  flights:
+    image: fabrix1987/flights:latest
+    mem_limit: 700m
+    ports:
+      - "8080:8080"
+    networks:
+      - fabrix1987
+    depends_on:
+      - configserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    environment:
+      SPRING_APPLICATION_NAME: flights
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+  
+    
+  hotels:
+    image: fabrix1987/hotels:latest
+    mem_limit: 700m
+    ports:
+      - "8090:8090"
+    networks:
+      - fabrix1987
+    depends_on:
+      - configserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    environment:
+      SPRING_APPLICATION_NAME: hotels
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/  
+    
+networks:
+  fabrix1987:
