@@ -1,5 +1,4 @@
 version: "3.8"
-
 services:
 
   configserver:
@@ -8,27 +7,28 @@ services:
     ports:
       - "8071:8071"
     networks:
-      - fabrix1987
-  
+     - fabrix1987
+   
   eurekaserver:
     image: fabrix1987/eurekaserver:latest
     mem_limit: 700m
     ports:
       - "8070:8070"
     networks:
-      - fabrix1987 
+     - fabrix1987
     depends_on:
       - configserver
-    deploy: 
+    deploy:
       restart_policy:
         condition: on-failure
-        delay: 5s
+        delay: 15s
         max_attempts: 3
         window: 120s
     environment:
+      SPRING_APPLICATION_NAME: eurekaserver
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-
+      
   flights:
     image: fabrix1987/flights:latest
     mem_limit: 700m
@@ -39,17 +39,18 @@ services:
     depends_on:
       - configserver
       - eurekaserver
-    deploy: 
+    deploy:
       restart_policy:
         condition: on-failure
-        delay: 5s
+        delay: 30s
         max_attempts: 3
         window: 120s
     environment:
+      SPRING_APPLICATION_NAME: flights
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-      EUREKA_CLIIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
-    
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+  
   hotels:
     image: fabrix1987/hotels:latest
     mem_limit: 700m
@@ -60,16 +61,17 @@ services:
     depends_on:
       - configserver
       - eurekaserver
-    deploy: 
+    deploy:
       restart_policy:
         condition: on-failure
-        delay: 5s
+        delay: 30s
         max_attempts: 3
         window: 120s
     environment:
+      SPRING_APPLICATION_NAME: hotels
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-      EUREKA_CLIIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/ 
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
       
 networks:
   fabrix1987:  
