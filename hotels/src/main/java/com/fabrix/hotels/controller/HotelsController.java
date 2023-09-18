@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fabrix.hotels.config.HotelsServiceConfig;
@@ -28,7 +29,7 @@ public class HotelsController {
 	HotelsServiceConfig hotelsConfig;
 
 	@PostMapping("/myHotels")
-	public List<Hotels> getLoansDetails(@RequestBody Customer customer) {
+	public List<Hotels> getHotelsDetails(@RequestHeader("fabrix-correlation-id") String correlationid, @RequestBody Customer customer) {
 		List<Hotels> hotels = hotelsRepository.findByCustomerIdOrderByStartDtDesc(customer.getCustomerId());
 		if (hotels != null) {
 			return hotels;

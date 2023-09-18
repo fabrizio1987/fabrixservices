@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fabrix.flights.config.FlightsServiceConfig;
@@ -64,9 +65,9 @@ public class FlightsController {
 	//@CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod ="myCustomerDetailsFallBack")
 
 	@Retry(name = "retryForCustomerDetails", fallbackMethod = "myCustomerDetailsFallBack")
-	public CustomerDetails myCustomerDetails(@RequestBody Customer customer) {
+	public CustomerDetails myCustomerDetails(@RequestHeader("fabrix-correlation-id") String correlationid, @RequestBody Customer customer) {
 		Flights flights = flightsRepository.findByCustomerId(customer.getCustomerId());
-		List<Hotels> hotels = hotelsFeignClient.getHotelsDetails(customer);
+		List<Hotels> hotels = hotelsFeignClient.getHotelsDetails(correlationid, customer);
 
 		CustomerDetails customerDetails = new CustomerDetails();
 		customerDetails.setFlights(flights);
@@ -76,7 +77,7 @@ public class FlightsController {
 
 	}
 	
-	private CustomerDetails myCustomerDetailsFallBack(Customer customer, Throwable t) {
+	private CustomerDetails myCustomerDetailsFallBack(@RequestHeader("fabrix-correlation-id") String correlationid, Customer customer, Throwable t) {
 		
 		//fallback method that is used if Hotels services is down
 		Flights flights = flightsRepository.findByCustomerId(customer.getCustomerId());
