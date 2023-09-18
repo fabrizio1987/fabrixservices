@@ -20,6 +20,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
+
 
 
 @RestController
@@ -55,7 +59,11 @@ public class FlightsController {
 		return jsonStr;
 	}
 	
+
 	@PostMapping("/myCustomerDetails")
+	//@CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod ="myCustomerDetailsFallBack")
+
+	@Retry(name = "retryForCustomerDetails", fallbackMethod = "myCustomerDetailsFallBack")
 	public CustomerDetails myCustomerDetails(@RequestBody Customer customer) {
 		Flights flights = flightsRepository.findByCustomerId(customer.getCustomerId());
 		List<Hotels> hotels = hotelsFeignClient.getHotelsDetails(customer);
@@ -66,6 +74,26 @@ public class FlightsController {
 		
 		return customerDetails;
 
+	}
+	
+	private CustomerDetails myCustomerDetailsFallBack(Customer customer, Throwable t) {
+		
+		//fallback method that is used if Hotels services is down
+		Flights flights = flightsRepository.findByCustomerId(customer.getCustomerId());
+		CustomerDetails customerDetails = new CustomerDetails();
+		customerDetails.setFlights(flights);
+		return customerDetails;
+
+	}
+	
+	@GetMapping("/sayHello")
+	@RateLimiter(name = "sayHello", fallbackMethod = "sayHelloFallback")
+	public String sayHello() {
+		return "Hello, Welcome to Fabrix app";
+	}
+
+	private String sayHelloFallback(Throwable t) {
+		return "Hi, Welcome to Fabrix app";
 	}
 
 }
