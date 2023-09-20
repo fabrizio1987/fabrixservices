@@ -1,7 +1,8 @@
 package com.fabrix.flights.controller;
 
 import java.util.List;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,8 @@ import io.github.resilience4j.retry.annotation.Retry;
 @RestController
 public class FlightsController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(FlightsController.class);
+	
 	@Autowired
 	private FlightsRepository flightsRepository;
 	
@@ -41,14 +44,15 @@ public class FlightsController {
 
 	@PostMapping("/myFlights")
 	public Flights getFlightsDetails(@RequestBody Customer customer) {
-
+		logger.info("getFlightsDetails() method started");
 		Flights flights = flightsRepository.findByCustomerId(customer.getCustomerId());
+		logger.info("getFlightsDetails() method ended");
 		if (flights != null) {
 			return flights;
 		} else {
 			return null;
 		}
-
+		
 	}
 	
 	@GetMapping("/flights/properties")
@@ -62,17 +66,17 @@ public class FlightsController {
 	
 
 	@PostMapping("/myCustomerDetails")
-	//@CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod ="myCustomerDetailsFallBack")
-
+	@CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod ="myCustomerDetailsFallBack")
 	@Retry(name = "retryForCustomerDetails", fallbackMethod = "myCustomerDetailsFallBack")
 	public CustomerDetails myCustomerDetails(@RequestHeader("fabrix-correlation-id") String correlationid, @RequestBody Customer customer) {
+		logger.info("myCustomerDetails() method started");
 		Flights flights = flightsRepository.findByCustomerId(customer.getCustomerId());
 		List<Hotels> hotels = hotelsFeignClient.getHotelsDetails(correlationid, customer);
 
 		CustomerDetails customerDetails = new CustomerDetails();
 		customerDetails.setFlights(flights);
 		customerDetails.setHotels(hotels);
-		
+		logger.info("myCustomerDetails() method ended");
 		return customerDetails;
 
 	}
