@@ -9,9 +9,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 700m
+          memory: 2g
     environment:
-      ES_JAVA_OPTS: '-Xms50M -Xmx100M'
+      JVM_OPTS: -Xmx4g -Xms1g -XX:MaxPermSize=1024m 
       JAVA_TOOL_OPTIONS: "-javaagent:BOOT-INF/lib/opentelemetry-javaagent-1.27.0.jar"
       OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
       OTEL_METRICS_EXPORTER: none

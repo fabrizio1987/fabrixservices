@@ -3,15 +3,17 @@ services:
 
   configserver:
     image: fabrix1987/configserver:latest
-    mem_limit: 700m
+    mem_limit: 1g
     ports:
       - "8071:8071"
     networks:
      - fabrix1987
+    environment:
+      JVM_OPTS: -Xmx2g -Xms500m -XX:MaxPermSize=1024m 
    
   eurekaserver:
     image: fabrix1987/eurekaserver:latest
-    mem_limit: 700m
+    mem_limit: 1g
     ports:
       - "8070:8070"
     networks:
@@ -25,13 +27,14 @@ services:
         max_attempts: 3
         window: 120s
     environment:
+      JVM_OPTS: -Xmx2g -Xms500m -XX:MaxPermSize=1024m 
       SPRING_APPLICATION_NAME: eurekaserver
       SPRING_PROFILES_ACTIVE: dev
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
       
   flights:
     image: fabrix1987/flights:latest
-    mem_limit: 700m
+    mem_limit: 1g
     ports:
       - "8080:8080"
     networks:
@@ -46,6 +49,7 @@ services:
         max_attempts: 3
         window: 120s
     environment:
+      JVM_OPTS: -Xmx2g -Xms500m -XX:MaxPermSize=1024m 
       SPRING_APPLICATION_NAME: flights
       SPRING_PROFILES_ACTIVE: dev
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
@@ -53,7 +57,7 @@ services:
   
   hotels:
     image: fabrix1987/hotels:latest
-    mem_limit: 700m
+    mem_limit: 1g
     ports:
       - "8090:8090"
     networks:
@@ -68,6 +72,7 @@ services:
         max_attempts: 3
         window: 120s
     environment:
+      JVM_OPTS: -Xmx2g -Xms500m -XX:MaxPermSize=1024m 
       SPRING_APPLICATION_NAME: hotels
       SPRING_PROFILES_ACTIVE: dev
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
@@ -75,7 +80,7 @@ services:
 
   gatewayserver:
     image: fabrix1987/gatewayserver:latest
-    mem_limit: 700m
+    mem_limit: 1g
     ports:
       - "8072:8072"
     networks:
@@ -92,6 +97,7 @@ services:
         max_attempts: 3
         window: 180s
     environment:
+      JVM_OPTS: -Xmx2g -Xms500m -XX:MaxPermSize=1024m 
       SPRING_APPLICATION_NAME: gatewayserver
       SPRING_PROFILES_ACTIVE: dev
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
