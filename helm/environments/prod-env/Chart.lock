@@ -1,0 +1,18 @@
+dependencies:
+- name: fabrix-common
+  repository: file://../../fabrix-common
+  version: 0.1.0
+- name: configserver
+  repository: file://../../fabrix-services/configserver
+  version: 0.1.0
+- name: hotels
+  repository: file://../../fabrix-services/hotels
+  version: 0.1.0
+- name: flights
+  repository: file://../../fabrix-services/flights
+  version: 0.1.0
+- name: gatewayserver
+  repository: file://../../fabrix-services/gatewayserver
+  version: 0.1.0
+digest: sha256:25e01004c74a3465871d6b3a18f87bfc6d7ee213f87be5372d0b45408211d2ec
+generated: "2024-02-01T11:56:17.4084983+01:00"
