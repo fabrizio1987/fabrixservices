@@ -1,0 +1,16 @@
+encrypt:
+  key: fabrix
+server:
+  port: 8071
+spring:
+  application:
+    name: configserver
+  cloud:
+    config:
+      server:
+        git:
+          clone-on-start: true
+          default-label: main
+          uri: https://github.com/fabrizio1987/microservices-config.git
+  profiles:
+    active: git

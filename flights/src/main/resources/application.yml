@@ -1,0 +1,73 @@
+endpoints:
+  shutdown:
+    enabled: true
+info:
+  app:
+    description: Fabrix Flights Application
+    name: Flights Microservice
+    version: 1.0.0
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  info:
+    env:
+      enabled: true
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+    instances:
+      detailsForCustomerSupportApp:
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 2
+        waitDurationInOpenState: 30000
+  ratelimiter:
+    configs:
+      default:
+        registerHealthIndicator: true
+    instances:
+      sayHello:
+        limitForPeriod: 1
+        limitRefreshPeriod: 5000
+        timeoutDuration: 5000
+  retry:
+    instances:
+      retryForCustomerDetails:
+        max-attempts: 3
+        waitDuration: 2000
+server:
+  port: 8080
+spring:
+  application:
+    name: flights
+  config:
+    import: optional:configserver:http://localhost:8071/
+  cloud:
+    kubernetes:
+      discovery:
+        all-namespaces: true
+    openfeign:
+      circuitbreaker:
+        enabled: true  
+  datasource:
+    driverClassName: org.h2.Driver
+    password: ''
+    url: jdbc:h2:mem:testdb
+    username: sa
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  profiles:
+    active: prod

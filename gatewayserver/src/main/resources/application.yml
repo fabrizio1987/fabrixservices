@@ -1,0 +1,38 @@
+info:
+  app:
+    description: Fabrix Gateway Server Application
+    name: Gateway Server Microservice
+    version: 1.0.0
+logging:
+  level:
+    com:
+      fabrix: DEBUG
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  info:
+    env:
+      enabled: true
+spring:
+  application:
+    name: gatewayserver
+  cloud:
+    gateway:
+      httpclient:
+        connect-timeout: 1000
+        response-timeout: 10s
+    kubernetes:
+      discovery:
+        enabled: true
+        all-namespaces: true
+    discovery:
+      client:
+        health-indicator:
+          enabled: false
+  config:
+    import: optional:configserver:http://localhost:8071/

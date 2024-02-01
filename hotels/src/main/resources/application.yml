@@ -1,0 +1,45 @@
+endpoints:
+  shutdown:
+    enabled: true
+info:
+  app:
+    description: Fabrix Hotels Application
+    name: Hotels Microservice
+    version: 1.0.0
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  info:
+    env:
+      enabled: true
+server:
+  port: 8090
+spring:
+  application:
+    name: hotels
+  config:
+    import: optional:configserver:http://localhost:8071/
+  cloud:
+    kubernetes:
+      discovery:
+        all-namespaces: true    
+  datasource:
+    driverClassName: org.h2.Driver
+    password: ''
+    url: jdbc:h2:mem:testdb
+    username: sa
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  profiles:
+    active: prod

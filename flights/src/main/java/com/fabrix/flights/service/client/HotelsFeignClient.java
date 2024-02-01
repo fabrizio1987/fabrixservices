@@ -13,7 +13,7 @@ import com.fabrix.flights.model.Customer;
 import com.fabrix.flights.model.Hotels;
 
 
-@FeignClient("hotels")
+@FeignClient(name="hotels", url="http://hotels:8090")
 public interface HotelsFeignClient {
 
 	@RequestMapping(method = RequestMethod.POST, value = "myHotels", consumes = "application/json")
