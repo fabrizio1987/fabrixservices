@@ -10,7 +10,7 @@ replicaCount: 1
 
 image:
   repository: fabrix1987/configserver
-  tag: v0.1
+  tag: v0.2
 
 containerPort: 8071
 
@@ -24,5 +24,5 @@ profile_enabled: false
 config_enabled: false
 discovery_enabled: false
 resouceserver_enabled: false
-otel_enabled: false
+otel_enabled: true
 kafka_enabled: false

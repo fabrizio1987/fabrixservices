@@ -14,3 +14,16 @@ spring:
           uri: https://github.com/fabrizio1987/microservices-config.git
   profiles:
     active: git
+
+management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  level:
+    com:
+      fabrix: DEBUG
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"     
+     

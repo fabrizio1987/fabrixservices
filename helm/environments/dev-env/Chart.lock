@@ -15,4 +15,4 @@ dependencies:
   repository: file://../../fabrix-services/gatewayserver
   version: 0.1.0
 digest: sha256:25e01004c74a3465871d6b3a18f87bfc6d7ee213f87be5372d0b45408211d2ec
-generated: "2024-02-01T11:56:02.1533974+01:00"
+generated: "2024-02-05T16:01:51.4380576+01:00"

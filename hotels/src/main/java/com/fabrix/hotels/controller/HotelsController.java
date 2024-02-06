@@ -34,9 +34,9 @@ public class HotelsController {
 
 	@PostMapping("/myHotels")
 	public List<Hotels> getHotelsDetails(@RequestHeader("fabrix-correlation-id") String correlationid, @RequestBody Customer customer) {
-		logger.info("getHotelsDetails() method started");
+		logger.debug("getHotelsDetails() method started");
 		List<Hotels> hotels = hotelsRepository.findByCustomerIdOrderByStartDtDesc(customer.getCustomerId());
-		logger.info("getHotelsDetails() method ended");
+		logger.debug("getHotelsDetails() method ended");
 		if (hotels != null) {
 			return hotels;
 		} else {

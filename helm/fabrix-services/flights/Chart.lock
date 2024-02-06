@@ -3,4 +3,4 @@ dependencies:
   repository: file://../../fabrix-common
   version: 0.1.0
 digest: sha256:8fab751cea34efa9e6d9e449f0b8b7eb7bdefa48b8328a8a8090137c8fbe0626
-generated: "2024-02-01T11:55:09.6157678+01:00"
+generated: "2024-02-05T15:59:21.862065+01:00"

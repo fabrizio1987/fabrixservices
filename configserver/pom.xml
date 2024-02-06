@@ -16,12 +16,22 @@
 	<properties>
 		<java.version>20</java.version>
 		<spring-cloud.version>2022.0.4</spring-cloud.version>
-		<otelVersion>1.27.0</otelVersion>
+		<otelVersion>1.32.0</otelVersion>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.opentelemetry.javaagent</groupId>
+			<artifactId>opentelemetry-javaagent</artifactId>
+			<version>${otelVersion}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -45,19 +55,6 @@
 		</dependencies>
 	</dependencyManagement>
 
-<!--	<build>-->
-<!--		<plugins>-->
-<!--			<plugin>-->
-<!--				<groupId>org.springframework.boot</groupId>-->
-<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--				<configuration>-->
-<!--					<image>-->
-<!--						<name>fabrix1987/${project.artifactId}</name>-->
-<!--					</image>-->
-<!--				</configuration>-->
-<!--			</plugin>-->
-<!--		</plugins>-->
-<!--	</build>-->
 	<build>
 		<plugins>
 			<plugin>
@@ -65,7 +62,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>fabrix1987/${project.artifactId}:v0.1</name>
+						<name>fabrix1987/${project.artifactId}:v0.2</name>
 						<env>
 			                <BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
 			             </env>
@@ -75,23 +72,5 @@
 		</plugins>
 	</build>	
 
-<!--	<build>-->
-<!--		<plugins>-->
-<!--			<plugin>-->
-<!--				<groupId>org.springframework.boot</groupId>-->
-<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--			</plugin>-->
-<!--			<plugin>-->
-<!--				<groupId>com.google.cloud.tools</groupId>-->
-<!--				<artifactId>jib-maven-plugin</artifactId>-->
-<!--				<version>3.4.0</version>-->
-<!--				<configuration>-->
-<!--					<to>-->
-<!--						<image>fabrix1987/${project.artifactId}:s1</image>-->
-<!--					</to>-->
-<!--				</configuration>-->
-<!--			</plugin>-->
-<!--		</plugins>-->
-<!--	</build>-->
 
 </project>

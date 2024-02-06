@@ -44,9 +44,9 @@ public class FlightsController {
 
 	@PostMapping("/myFlights")
 	public Flights getFlightsDetails(@RequestBody Customer customer) {
-		logger.info("getFlightsDetails() method started");
+		logger.debug("getFlightsDetails method started");
 		Flights flights = flightsRepository.findByCustomerId(customer.getCustomerId());
-		logger.info("getFlightsDetails() method ended");
+		logger.debug("getFlightsDetails method ended");
 		if (flights != null) {
 			return flights;
 		} else {
@@ -69,14 +69,14 @@ public class FlightsController {
 	@CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod ="myCustomerDetailsFallBack")
 	@Retry(name = "retryForCustomerDetails", fallbackMethod = "myCustomerDetailsFallBack")
 	public CustomerDetails myCustomerDetails(@RequestHeader("fabrix-correlation-id") String correlationid, @RequestBody Customer customer) {
-		logger.info("myCustomerDetails() method started");
+		logger.debug("myCustomerDetails() method started");
 		Flights flights = flightsRepository.findByCustomerId(customer.getCustomerId());
 		List<Hotels> hotels = hotelsFeignClient.getHotelsDetails(correlationid, customer);
 
 		CustomerDetails customerDetails = new CustomerDetails();
 		customerDetails.setFlights(flights);
 		customerDetails.setHotels(hotels);
-		logger.info("myCustomerDetails() method ended");
+		logger.debug("myCustomerDetails() method ended");
 		return customerDetails;
 
 	}

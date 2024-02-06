@@ -10,7 +10,7 @@ replicaCount: 1
 
 image:
   repository: fabrix1987/flights
-  tag: v0.1
+  tag: v0.2
 
 containerPort: 8080
 
@@ -24,5 +24,5 @@ profile_enabled: true
 config_enabled: true
 discovery_enabled: true
 resouceserver_enabled: false
-otel_enabled: false
+otel_enabled: true
 kafka_enabled: false
