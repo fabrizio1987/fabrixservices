@@ -1,5 +1,5 @@
 apiVersion: v2
-name: prod-env
+name: message
 description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -27,23 +27,3 @@ dependencies:
   - name: fabrix-common
     version: 0.1.0
     repository: file://../../fabrix-common
-
-  - name: configserver
-    version: 0.1.0
-    repository: file://../../fabrix-services/configserver
-    
-  - name: hotels
-    version: 0.1.0
-    repository: file://../../fabrix-services/hotels
-    
-  - name: flights
-    version: 0.1.0
-    repository: file://../../fabrix-services/flights
-    
-  - name: message
-    version: 0.1.0
-    repository: file://../../fabrix-services/message    
-
-  - name: gatewayserver
-    version: 0.1.0
-    repository: file://../../fabrix-services/gatewayserver

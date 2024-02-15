@@ -40,6 +40,10 @@ dependencies:
     version: 0.1.0
     repository: file://../../fabrix-services/flights
 
+  - name: message
+    version: 0.1.0
+    repository: file://../../fabrix-services/message   
+    
   - name: gatewayserver
     version: 0.1.0
     repository: file://../../fabrix-services/gatewayserver
