@@ -10,7 +10,7 @@ replicaCount: 1
 
 image:
   repository: fabrix1987/configserver
-  tag: v0.2
+  tag: v0.3
 
 containerPort: 8071
 

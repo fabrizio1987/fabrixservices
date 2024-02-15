@@ -6,7 +6,8 @@ CREATE TABLE `customer` (
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `mobile_number` varchar(20) NOT NULL,
-  `create_dt` date DEFAULT NULL
+  `create_dt` date DEFAULT NULL,
+  `communication_sw` BOOLEAN
 );
 
 CREATE TABLE `flights` (

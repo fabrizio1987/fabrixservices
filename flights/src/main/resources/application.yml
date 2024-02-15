@@ -67,7 +67,20 @@ spring:
         all-namespaces: true
     openfeign:
       circuitbreaker:
-        enabled: true  
+        enabled: true 
+    function:
+      definition: updateCommunication
+    stream:
+      bindings:
+        updateCommunication-in-0:
+          destination: communication-sent
+          group: ${spring.application.name}
+        sendCommunication-out-0:
+          destination: send-communication
+      kafka:
+        binder:
+          brokers:
+            - localhost:9092         
   datasource:
     driverClassName: org.h2.Driver
     password: ''
